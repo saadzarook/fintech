@@ -2,17 +2,15 @@ package com.saadzarook.fintech.service;
 
 import com.saadzarook.fintech.global.exception.payments.PaymentException;
 import com.saadzarook.fintech.model.dto.request.PaymentRequest;
-import com.stripe.Stripe;
-import com.stripe.StripeClient;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,7 +26,7 @@ public class PaymentService {
             Map<String, Object> params = new HashMap<>();
             params.put("amount", paymentRequest.getAmount());
             params.put("currency", paymentRequest.getCurrency());
-            params.put("payment_method_types", Arrays.asList("card"));
+            params.put("payment_method_types", List.of("card"));
 
             return stripeService.createPaymentIntent(params);
         } catch (StripeException e) {
